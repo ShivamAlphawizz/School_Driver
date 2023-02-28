@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "634818228357",
+    "project_id": "e-gate-9122b",
+    "storage_bucket": "e-gate-9122b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634818228357:android:c498516bae9d5258f0f9ec",
+        "android_client_info": {
+          "package_name": "com.schoolmanagement.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634818228357-m5519shgmr7ndd3rnblfsq50sl4jevoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0zYqjoMZNOp4lop0y8HKqWBPnqIPpk0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634818228357-m5519shgmr7ndd3rnblfsq50sl4jevoq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634818228357:android:8ba60dfc1b560c0cf0f9ec",
+        "android_client_info": {
+          "package_name": "com.schoolmanagement.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634818228357-fq9a4d6ggvlqr0e5h97r1kgsqklbbv55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.schoolmanagement.user",
+            "certificate_hash": "35b6f887462150c31abf00621e793f4ab57448ab"
+          }
+        },
+        {
+          "client_id": "634818228357-m5519shgmr7ndd3rnblfsq50sl4jevoq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0zYqjoMZNOp4lop0y8HKqWBPnqIPpk0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634818228357-m5519shgmr7ndd3rnblfsq50sl4jevoq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
