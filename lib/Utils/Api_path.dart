@@ -1,7 +1,7 @@
 class ApiPath{
 
-  static const String baseUrl ="https://developmentalphawizz.com/e_gate/Api/";
-  static const String imageUrl ="https://developmentalphawizz.com/e_gate/uploads/profile_pics/";
+  static const String baseUrl ="https://egateschool.co.in/Api/";
+  static const String imageUrl ="https://egateschool.co.in/uploads/profile_pics/";
 
   static const String driverlogin = baseUrl +'driver_login';
   static const String update_profile = baseUrl+'update_profile';
