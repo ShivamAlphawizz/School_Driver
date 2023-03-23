@@ -39,7 +39,7 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
 
  StudentDetailsModel? studentDetailsModel;
 
- Future<StudentDetailsModel?>studentDetails() async {
+ Future<StudentDetailsModel?>studentDetails(String? id) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
    String? user_id = prefs.getString('user_id');
    print("print id here ${user_id}");
@@ -49,6 +49,7 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
    var request = http.MultipartRequest('POST', Uri.parse('${ApiPath.get_student_details}'));
    request.fields.addAll({
      'id': '${user_id}',
+     'shift':id == ""||id== null ? "":id == "Morning" ? "1":"2"
    });
    print("paramter here ${request.fields} and ${ApiPath.get_student_details}");
    request.headers.addAll(headers);
@@ -71,19 +72,21 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
    }
  }
 
+ String? selectedShift;
+
 @override
   void initState() {
     // TODO: implement initState
   PushNotificationService pushNotificationService = new PushNotificationService(context: context);
   pushNotificationService.initialise();
       Future.delayed(Duration(microseconds: 500),(){
-        return  studentDetails();
+        return  studentDetails('');
       });
     super.initState();
   }
 
  Future _refresh() async{
-  return studentDetails();
+  return studentDetails('');
  }
 
  Future<bool> showExitPopup() async {
@@ -278,8 +281,8 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                       const Text("Select All",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                        const SizedBox(
+                        Text("Select All",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                        SizedBox(
                           width: 5,
                         ),
                         Container(
@@ -299,6 +302,39 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
 
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 25,left: 25),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    alignment: Alignment.centerRight,
+                      width: 130,
+                    child:  DropdownButton(
+                      value: selectedShift,
+                      underline: Container(),
+                      hint: Text("Select Shift"),
+                      icon: Icon(Icons.keyboard_arrow_down),
+                      items: ['Morning','Evening'].map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedShift = newValue.toString();
+                          studentDetails('${selectedShift}');
+                        });
+                        print("selected shift here ${selectedShift}");
+                      },
+                    ),
+                  ),
+                ],
               ),
               Expanded(
                 child: Container(

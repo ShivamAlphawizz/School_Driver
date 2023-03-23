@@ -94,6 +94,8 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  bool showPassword = false;
+
   var _value = 0;
   bool isEmail = true;
   final _formKey = GlobalKey<FormState>();
@@ -163,7 +165,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           width: MediaQuery.of(context).size.width / 1.2,
                           height: 48,
                           child: TextFormField(
-                            obscureText: true,
+                            obscureText: showPassword == true  ? false: true,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter Valid Password';
@@ -171,7 +173,15 @@ class _SignInScreenState extends State<SignInScreen> {
                               return null;
                             },
                             controller: passwordCtr,
+
                             decoration: InputDecoration(
+                              suffixIcon: InkWell(
+                                  onTap: (){
+                                    setState(() {
+                                      showPassword = !showPassword;
+                                    });
+                                  },
+                                  child: showPassword == true  ? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none
                                 ),

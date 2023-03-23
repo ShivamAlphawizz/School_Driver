@@ -62,7 +62,7 @@ class _RecruiterMyProfileScreenState extends State<RecruiterMyProfileScreen> {
     request.fields.addAll({
       'id': '${user_id}',
     });
-    print("checking data here ${request.fields} and ${ApiPath.baseUrl}get_driver_profile");
+
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {

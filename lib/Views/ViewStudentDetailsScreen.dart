@@ -133,7 +133,7 @@ class _ViewStudentDetailsScreenState extends State<ViewStudentDetailsScreen> {
 
     @override
   Widget build(BuildContext context) {
-    print("print data here ${widget.student_id}");
+
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
