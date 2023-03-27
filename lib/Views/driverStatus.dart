@@ -25,6 +25,8 @@ class _DriverStatusState extends State<DriverStatus> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool isLoading = false;
+
   getUpadetStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? user_id = prefs.getString('user_id');
@@ -189,6 +191,9 @@ class _DriverStatusState extends State<DriverStatus> {
                         padding: const EdgeInsets.only(left: 20.0),
                         child: InkWell(
                           onTap: (){
+                            setState(() {
+                              isLoading = true;
+                            });
                             if(_formKey.currentState!.validate()){
                               // Navigator.pop(context,{
                               //   'feedback': feedbackController.text,
@@ -196,11 +201,9 @@ class _DriverStatusState extends State<DriverStatus> {
                               getUpadetStatus();
                             }
                             else{
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(
-                              //       content: Center(child: Text(' Fields are required')),
-                              //     )
-                              // );
+                              setState(() {
+                                isLoading = false;
+                              });
                             }
 
                           },
@@ -211,7 +214,7 @@ class _DriverStatusState extends State<DriverStatus> {
                             ),
                             height: 40,
                             width: MediaQuery.of(context).size.width/2,
-                            child: Center(child: Text('Updated Date',style: TextStyle(color:whiteColor),)),
+                            child:isLoading == true ? Center(child: CircularProgressIndicator(),) : Center(child: Text('Update Date',style: TextStyle(color:whiteColor),)),
                           ),
                         ),
                       ),

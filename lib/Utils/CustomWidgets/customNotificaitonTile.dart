@@ -3,8 +3,8 @@ import 'package:job_dekho_app/Utils/style.dart';
 
 class CustomNotificaitonTile extends StatelessWidget {
   final String username;
-  final String time;
-  const CustomNotificaitonTile({Key? key, required this.username, required this.time}) : super(key: key);
+  final String? time,description;
+   CustomNotificaitonTile({Key? key, required this.username, required this.time,this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,10 @@ class CustomNotificaitonTile extends StatelessWidget {
                 mainAxisAlignment:  MainAxisAlignment.spaceBetween,
                 children: [
                   Text(username, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                  Text(time, style: TextStyle(fontFamily: 'Serif', color: greyColor2,fontSize: 12, fontWeight: FontWeight.bold),),
+                  Text(time.toString(), style: TextStyle(fontFamily: 'Serif', color: greyColor2,fontSize: 12, fontWeight: FontWeight.bold),),
                 ],
               ),
-              Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", style: TextStyle(fontFamily: 'Serif'))
+              Text("${description}", style: TextStyle(fontFamily: 'Serif'))
             ],
           ),
         ),

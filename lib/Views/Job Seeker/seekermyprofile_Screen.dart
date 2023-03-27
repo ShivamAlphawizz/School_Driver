@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:job_dekho_app/Utils/CustomWidgets/TextFields/customDropDownTextField.dart';
@@ -34,11 +36,8 @@ class SeekerProfileDetailScreen extends StatefulWidget {
 
 class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
 
-
  // Data? detailsModel;
-
  StudentDetailsModel? studentDetailsModel;
-
  Future<StudentDetailsModel?>studentDetails(String? id) async {
    SharedPreferences prefs = await SharedPreferences.getInstance();
    String? user_id = prefs.getString('user_id');
@@ -71,7 +70,6 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
      print(response.reasonPhrase);
    }
  }
-
  String? selectedShift;
 
 @override
@@ -83,6 +81,7 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
         return  studentDetails('');
       });
     super.initState();
+  getCurrentLoc();
   }
 
  Future _refresh() async{
@@ -158,10 +157,73 @@ class _SeekerProfileDetailScreenState extends State<SeekerProfileDetailScreen> {
      print(response.reasonPhrase);
    }
  }
-
   String? gender;
-  @override
+
+
+ /// get currnt loaction
+
+ var latitude;
+ var longitude;
+
+ String? currentAddress;
+ Future<void> getCurrentLoc() async {
+   LocationPermission permission;
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   permission = await Geolocator.requestPermission();
+   Position position = await Geolocator.getCurrentPosition(
+       desiredAccuracy: LocationAccuracy.high);
+   latitude = position.latitude.toString();
+   longitude = position.longitude.toString();
+   prefs.setString('lat', '${latitude}');
+   prefs.setString('long', '${longitude}');
+   print("latitude ${latitude} and ${longitude}");
+   List<Placemark> placemark = await placemarkFromCoordinates(
+       double.parse(latitude!), double.parse(longitude!),
+       localeIdentifier: "en");
+
+   if (mounted) {
+     setState(() {
+       currentAddress = "${placemark[0].street}, ${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}";
+      // print("checking currrent address ${currentAddress}");
+       updateDriverLocation();
+       // latitude = position.latitude.toString();
+       // longitude = position.longitude.toString();
+       // loc.lng = position.longitude.toString();
+       // loc.lat = position.latitude.toString();
+     });
+   }
+ }
+  updateDriverLocation()async{
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   String? userid = prefs.getString('user_id');
+    var headers = {
+      'Cookie': 'ci_session=d017e0eeefffea5b8236f606037bac17a2eda922'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('${ApiPath.baseUrl}udpate_address'));
+    request.fields.addAll({
+      'driver_id': '${userid}',
+      'address': '${currentAddress}',
+      'lat': '${latitude}',
+      'lang': '${longitude}'
+    });
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      var finalResult = await response.stream.bytesToString();
+      final jsonResponse = json.decode(finalResult);
+      if(jsonResponse['response_code'] == "1"){
+      }
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
+
+
+ @override
   Widget build(BuildContext context) {
+   getCurrentLoc();
     final size = MediaQuery.of(context).size;
     return SafeArea(
         child:

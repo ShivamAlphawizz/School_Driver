@@ -42,10 +42,10 @@ class _ViewStudentDetailsScreenState extends State<ViewStudentDetailsScreen> {
     };
     var request = http.MultipartRequest('POST',Uri.parse('${ApiPath.udpate_status_driver}'));
     request.fields.addAll({
-      'student_id': '${widget.student_id}',
-      'status': '0',
-      'pickup_time': selectedTime == "Drop Time" ? "" : '$picUpTime',
-      'drop_time': selectedTime == "Drop Time" ? '$picUpTime' : '',
+      'student_id':'${widget.student_id}',
+      'status':'0',
+      'pickup_time':selectedTime=="Drop Time" ? "" :'$picUpTime',
+      'drop_time':selectedTime == "Drop Time" ? '$picUpTime' : '',
     });
     print("request is here ${request.fields}");
     request.headers.addAll(headers);
